@@ -566,13 +566,13 @@
                 id: "mrp"
             });
             var mrp = new FeatureLayer({
-                url: 'http://maps.dnr.utah.gov:6080/arcgis/rest/services/DWR/ARGOS_Condor/MapServer/1',
+                url: 'https://dwrmapserv.utah.gov/arcgis/rest/services/ARGOS/ARGOS_Condor/MapServer/1',
                 outFields: ["*"],
                 id: "mrpMain",
                 renderer: rendererPtsMRP
             });
             var fl = new FeatureLayer({
-                url: "http://maps.dnr.utah.gov:6080/arcgis/rest/services/DWR/ARGOS_Condor/MapServer/0",
+                url: "https://dwrmapserv.utah.gov/arcgis/rest/services/ARGOS/ARGOS_Condor/MapServer/0",
                 outFields: ["*"],
                 id: 'dataPts',
                 renderer: rendererPts
@@ -622,7 +622,7 @@
                             $.each(results, function(index, value) {
                                 var attributes = value.attributes;
                                 var name = attributes.name;
-                                console.log(name);
+
                                 names_all.push(name);
                                 names_all.sort();
                             });
@@ -636,7 +636,7 @@
                                     text: names_all[n]
                                 }));
                         }
-                        console.log(dict);
+
                         for (i in dict) {
                             rendererPts.addUniqueValueInfo(i,
                                 new SimpleMarkerSymbol({
@@ -669,13 +669,13 @@
                         var end = endDate.add(23,'hours').format('MM-DD-YYYY');
                         var dQuery = "Date_time <= date'" + end + "' AND Date_time >= date'" + start + "'";
                         //dQuery = "Date_time <= date'06-16-2016' AND Date_time >= date'05-01-2016'";
-                        console.log(dQuery);
+
                         fl.definitionExpression = dQuery;
                         fl.queryExtent().then(function(results) {
                             // go to the extent of the results satisfying the query
-                            console.log(results.extent);
+
                             app.mapView.goTo(results.extent.expand(1.25));/* default load*/
-                            console.log("went to extent");
+
                         });
                         fl.queryFeatures().then(function(results) {
                             // prints the array of result graphics to the console
@@ -714,7 +714,7 @@
 
 
 
-                            console.log("ListL", ptList.length);
+
                             for (var x = 0; x < ptList.length; x++) {
                                 var coordinates = [];
                                 var name = ptList[x][0].attributes.name;
@@ -783,8 +783,7 @@
 
                         legend.startup();
                         app.mapView.ui.add(legend, "bottom-left");
-                        console.log(gLayer);
-                        console.log(app.mapView);
+
 
                     }
                 });
@@ -925,7 +924,7 @@
                 $('.esri-legend').toggleClass('hidden show');
                 //console.log(screen.width);
                 if ((screen.width < 768)) {
-                    console.log("screen small");
+
                     // if screen size is 1025px wide or larger
                     $('.esri-legend').toggleClass('forceLegend');
                 }
@@ -969,7 +968,7 @@
                         opens: "center"
                     },
                     function(start, end, label) {
-                        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label);
+                        c
                         startDate = start;
                         endDate = end;
                     }
@@ -1085,15 +1084,15 @@
                     //console.log(nameListStr);
                     //var query = "ptt_id IN "+nameListStr;
 
-                    console.log(query);
+
                     //dQuery = "Date_time <= date'06-16-2016' AND Date_time >= date'05-01-2016'";
                     //console.log(dQuery);
                     fl.definitionExpression = query;
                     fl.queryExtent().then(function(results) {
                         // go to the extent of the results satisfying the query
-                        console.log(results.extent);
+
                         app.mapView.goTo(results.extent.expand(1.75));
-                        console.log("went to extent");
+
                     });
                     fl.queryFeatures().then(function(results) {
                         // prints the array of result graphics to the console
@@ -1132,7 +1131,7 @@
 
 
 
-                        console.log("ListL", ptList.length);
+
                         for (var x = 0; x < ptList.length; x++) {
                             var coordinates = [];
                             var name = ptList[x][0].attributes.name;
@@ -1194,8 +1193,7 @@
                         map.add(gLayer);
                     }
                     map.add(gLayerMRP);
-                    console.log(gLayer);
-                    console.log(app.mapView);
+
                 });
 
 
@@ -1210,7 +1208,7 @@
                 } else {
                     //show gif
                     $('#load').toggleClass('hidden show');
-                    console.log("mapview",app.mapView);
+
 
                 }
             }); // wait for the layer view to finish updating
@@ -1306,7 +1304,7 @@
                   });
       }
               else if(response.results.length > 1){
-                console.log("Firing loop");
+
                 for (var x = 0; x < response.results.length; x++) {
                     if (response.results[x].graphic.layer.id == 'mrp' || response.results[x].graphic.layer.id == 'dataPts'){
                 var center = webMercatorUtils.geographicToWebMercator(new Point({
@@ -1322,7 +1320,7 @@
                     location: center
                   });
       }}}
-      else{console.log("Clicked Track Line");
+      else{
           app.mapView.popup.close();
           removeHighlight();
       }
